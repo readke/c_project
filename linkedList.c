@@ -3,58 +3,57 @@
 
 typedef struct node{
 	int member;
-	struct pNode * pNext; 
+	struct node * next;
 } Node;
 
-void initLinkedList(Node * pHead);
-void addLinkedList(Node * pHead,int m);
-void foreachList(Node * pHead);
 
+void addLast(Node * pHead, int e);
+Node* createList();
+void printList(Node * pHead);
 int main(){
-	Node * pH;
 	int i;
-	initLinkedList(pH);
+	Node * pHead = NULL;
+	pHead = createList();
 	for(i=0;i<10;i++){
-		addLinkedList(pH,i);
+		addLast(pHead,i);
 	}
-	foreachList(pH);
+	
+	printList(pHead);
 }
-
-void initLinkedList(Node * pHead){
-	pHead = NULL; 
+Node* createList(){
+	Node * pHead = (Node *)malloc(sizeof(Node));
+	if(NULL == pHead){
+		exit(1);
+	} 
+	pHead->next = NULL;
+	return pHead;	
 }
-void addLinkedList(Node *pHead,int m){
-	Node * pNew,*pTemp;
-	pNew = (Node *)malloc(sizeof(Node));
-	 
+void addLast(Node * pHead,int e){
+	Node * pNew = (Node*)malloc(sizeof(Node));
+	Node * tail;
 	if(pNew == NULL){
-		printf("存储空间不足");
 		exit(1);
 	}
-	pNew->member = m;
-	pNew->pNext = NULL;
-	if(pHead == NULL){
-		pHead->pNext = pNew;
+	pNew->member = e;
+	pNew->next=NULL;
+	/*tail=pHead->next;
+	while(tail!=NULL){
+		tail=tail->next;
 	}
-		/*else{
-		pTemp = pHead;
-		while(pTemp != NULL){
-			pTemp = pTemp->pNext;
-		}
-		pTemp->pNext = pNew;
-	}*/
-}
-
-void foreachList(Node * pHead){
-	if(pHead == NULL){
-		printf("链表为空");
-		exit(1);
+	tail=pNew;*/
+ 	tail=pHead;
+ 	while(tail->next!= NULL){
+	 	tail=tail->next;
+ 	}
+ 	tail->next=pNew;
+ 		
+} 
+void printList(Node * pHead){
+	Node * p = pHead->next;
+	while(p!=NULL){
+		printf("%d ",p->member);
+		p=p->next;
 	}
-	Node * pFirst = pHead->pNext;
-	printf("%d",pFirst->member);
-	/*Node * pFirst = pHead->pNext;
-	while(pFirst != NULL){
-		printf("%d ",pFirst->member);
-	}*/
 	printf("\n");
 }
+ 
